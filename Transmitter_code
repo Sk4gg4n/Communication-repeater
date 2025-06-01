@@ -1,0 +1,16 @@
+#include <iarduino_RF433_Transmitter.h>
+
+iarduino_RF433_Transmitter radioTX(12);
+
+char i[] = "insert word";
+uint8_t k;
+
+void setup(){
+    radioTX.begin(1000);
+    radioTX.openWritingPipe(4);
+}
+
+void loop(){
+    radioTX.write(&i, sizeof(i));
+    delay(200);
+}
