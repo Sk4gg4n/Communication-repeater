@@ -1,0 +1,33 @@
+#include <iarduino_RF433_Transmitter.h>
+#include <iarduino_RF433_Receiver.h>
+
+iarduino_RF433_Transmitter radioTX(12);
+iarduino_RF433_Receiver    radioRX(2);
+
+char i[12];
+char j[12];
+uint8_t k;
+
+void setup(){
+
+    Serial.begin(9600);                              
+
+    radioRX.begin(1000);                                                     
+    radioRX.openReadingPipe (4);                        
+    radioRX.startListening  ();                           
+
+    radioTX.begin(1000);
+    radioTX.openWritingPipe(5);
+}
+
+void loop(){
+
+    if (radioRX.available(&k)){                       
+       radioRX.read(&j, sizeof(j));                      
+       Serial.println(j);
+       Serial.println((String)" (Pipe="+k+")");  
+    }
+
+    radioTX.write(&j, sizeof(j)); 
+    delay(200);                                           
+}
